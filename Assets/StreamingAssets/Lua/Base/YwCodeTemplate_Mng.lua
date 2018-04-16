@@ -4,14 +4,11 @@
 -- @filename  $(Class).lua
 -- @copyright Copyright (c) 2015 Yaukey/yaukeywang/WangYaoqi (yaukeywang@gmail.com) all rights reserved.
 -- @license   The MIT License (MIT)
--- @author    $(Author) $(AuthorName)@$(Mail).com
--- @date      2015-xx-xx
+-- @author    Yaukey yaukeywang@gmail.com
+-- @date      2016-xx-xx
 --
 
 local YwRegisterObject = require "Base/YwRegisterObject"
-
-local YwDeclare = YwDeclare
-local YwClass = YwClass
 
 local DLog = YwDebug.Log
 local DLogWarn = YwDebug.LogWarning
@@ -24,27 +21,27 @@ local $(Class) = YwDeclare(strClassName, YwClass(strClassName, YwRegisterObject)
 -- Member variables.
 
 -- The global instance holder.
-M.m_cInstance = false
+$(Class).m_cInstance = false
 
 -- Constructor.
-function $(Class):Constructor(cRegister)
-    --print("$(Class):Constructor")
+function $(Class):ctor(cRegister)
+    --print("$(Class):ctor")
 
-    if M.m_cInstance then
+    if $(Class).m_cInstance then
         DLogError("You have already create a $(Class) instance!")
         return
     end
 
     -- Set the global instance.
-    M.m_cInstance = self
+    $(Class).m_cInstance = self
 end
 
 -- Destructor.
-function $(Class):Destructor()
-    --print("$(Class):Destructor")
+function $(Class):dtor()
+    --print("$(Class):dtor")
 
     -- Release the global instance.
-    M.m_cInstance = nil
+    $(Class).m_cInstance = nil
 end
 
 -- Static function.
@@ -54,7 +51,7 @@ function $(Class).Instance()
 
     -- Check
     if not $(Class).m_cInstance then
-        $(Class).new(Dispatcher.Instance())
+        $(Class).new(YwDispatcher.Instance())
     end
 
     return $(Class).m_cInstance
